@@ -1,4 +1,6 @@
 import javafx.fxml.FXML;
+import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -23,7 +25,8 @@ public class BattlefieldController {
         createInterface();
 
         for(int i = 0; i < NUM_SOLDIERS; i++) {
-            soldiers.add(new Soldier());
+            System.out.println("Created Soldier");
+            soldiers.add(new Soldier(new Point2D(Math.random()*960,Math.random()*540), this));
         }
     }
 
@@ -32,6 +35,22 @@ public class BattlefieldController {
         rect1.setFill(Color.GRAY);
 
         theBattlefield.getChildren().addAll(rect1);
+    }
+
+    public static void addChild(Node node) {
+        getTheController().instanceAddChild(node);
+    }
+
+    public static BattlefieldController getTheController() {
+        if(theController == null) {
+            throw new IllegalStateException("theController should not be accessed before the " +
+                    "gameboard is initialized.");
+        }
+        return theController;
+    }
+
+    private void instanceAddChild(Node node) {
+        theBattlefield.getChildren().add(node);
     }
 
 }
