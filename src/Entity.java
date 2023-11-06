@@ -1,5 +1,9 @@
 public interface Entity {
 
-    public void createEntity();
+    void createEntity();
+
+    Weapon equipWeapon();
+
+
 
 }

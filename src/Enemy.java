@@ -8,4 +8,9 @@ public class Enemy implements Entity {
     public void createEntity() {
 
     }
+
+    @Override
+    public Weapon equipWeapon() {
+        return null;
+    }
 }
