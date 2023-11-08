@@ -1,4 +1,6 @@
-public class RandomWeapon implements WeaponFactory {
+package battlesim;
+
+public class BalancedWeapon implements WeaponFactory {
 
     @Override
     public Weapon createWeapon() {

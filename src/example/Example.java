@@ -16,6 +16,6 @@ public class Example {
 //        }
 //    }
 
-    // Soldier soldier = new Soldier(thString, dependency, dependency2)
-    // Soldier soldier = factory.createProduct(theString)
+    // battlesim.Soldier soldier = new battlesim.Soldier(thString, dependency, dependency2)
+    // battlesim.Soldier soldier = factory.createProduct(theString)
 }

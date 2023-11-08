@@ -1,3 +1,5 @@
+package battlesim;
+
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -25,7 +27,7 @@ public class BattlefieldController {
         createInterface();
 
         for(int i = 0; i < NUM_SOLDIERS; i++) {
-            System.out.println("Created Soldier");
+            System.out.println("Created battlesim.Soldier");
             soldiers.add(new Soldier(new Point2D(Math.random()*960,Math.random()*540), this));
         }
     }
