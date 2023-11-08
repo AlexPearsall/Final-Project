@@ -6,7 +6,7 @@ public class ThreadingApp {
     private List<Integer> theList;
 
     public ThreadingApp() {
-        
+
     }
     public static void main(String[] args) {
 
