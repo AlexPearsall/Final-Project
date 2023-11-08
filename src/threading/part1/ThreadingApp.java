@@ -23,7 +23,6 @@ public class ThreadingApp implements Runnable {
     }
 
     public void addElements(int count) {
-        //System.out.println("Working on thread");
 
         for (int i = 0; i < count; i++) {
             int num = (int) Math.round((Math.random() * 10000));
