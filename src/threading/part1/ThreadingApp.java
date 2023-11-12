@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ThreadingApp implements Runnable {
     private List<Integer> theList = new LinkedList<>();
-    private final int count = 10000000;
+    private final int count = 1000;
 
     public ThreadingApp() throws InterruptedException {
         Thread thread = new Thread(this);
