@@ -27,6 +27,7 @@ public class BattlefieldController {
     private ImageView imageHolder;
     private Label labelRed;
     private Label labelBlue;
+    Label winHow;
     private ImageView arrowImage;
     private final List<Soldier> soldiers = new ArrayList<>();
     private int numberOfSoldiers;
@@ -47,6 +48,8 @@ public class BattlefieldController {
         for (int i = 0; i < numberOfSoldiers; i++) {
             soldiers.add(new Soldier(new Point2D(Math.random() * 960, Math.random() * 540), this));
         }
+
+        //winnerDisplay("Soldiers", 0);
     }
 
     /**
@@ -55,63 +58,66 @@ public class BattlefieldController {
     private void createInterface() {
         int dimensions = 45;
 
-        labelBlue = createLabel(125, 500);
-        labelRed = createLabel(817, 500);
+        labelBlue = createLabel(125, 500, 35);
+        labelRed = createLabel(817, 500, 35);
+        Label blueSword = createLabel(74, 458, 22);
+        Label blueBow = createLabel(161, 458, 22);
+        Label redSword = createLabel(767, 458, 22);
+        Label redBow = createLabel(851, 458, 22);
 
         ImageView plusImageBlue = createImageView("images/Plus-Image.png", dimensions / 2);
-        Button plusButtonBlue = createButton(173, 505, plusImageBlue, 0, false, 0);
+        Button plusButtonBlue = createButton(173, 505, plusImageBlue);
         ButtonHandler plusBlueHandler = new ButtonHandler();
         plusBlueHandler.changeAmount(plusButtonBlue, labelBlue, 1);
         ImageView plusImageRed = createImageView("images/Plus-Image.png", dimensions / 2);
-        Button plusButtonRed = createButton(865, 505, plusImageRed, 0, false, 0);
+        Button plusButtonRed = createButton(865, 505, plusImageRed);
         ButtonHandler plusRedHandler = new ButtonHandler();
         plusRedHandler.changeAmount(plusButtonRed, labelRed, 1);
 
         ImageView minusImageBlue = createImageView("images/Minus-Image.png", dimensions / 2);
-        Button minusButtonBlue = createButton(73, 505, minusImageBlue, 0, false, 0);
+        Button minusButtonBlue = createButton(58, 505, minusImageBlue);
         ButtonHandler minusBlueHandler = new ButtonHandler();
         minusBlueHandler.changeAmount(minusButtonBlue, labelBlue, -1);
         ImageView minusImageRed = createImageView("images/Minus-Image.png", dimensions / 2);
-        Button minusButtonRed = createButton(765, 505, minusImageRed, 0, false, 0);
+        Button minusButtonRed = createButton(750, 505, minusImageRed);
         ButtonHandler minusRedHandler = new ButtonHandler();
         minusRedHandler.changeAmount(minusButtonRed, labelRed, -1);
 
 
-        ImageView playImage = createImageView("images/Play-Image.png", dimensions);
-        ImageView pauseImage = createImageView("images/Pause-Image.png", dimensions);
+        ImageView playImage = createImageView("images/Play-Image.png", 96);
+        ImageView pauseImage = createImageView("images/Pause-Image.png", 96);
 
         //440 middle / 370 side
-        Button playPauseButton = createButton(370, 447, playImage, 10, false, 3);
+        Button playPauseButton = createButton(355, 432, playImage);
         ButtonHandler playPauseHandler = new ButtonHandler();
         playPauseHandler.playPause(playPauseButton, playImage, pauseImage);
 
-        Button setBoard = new Button("Set Board");
-        setBoard.setLayoutX(495);
-        setBoard.setLayoutY(447);
+        ImageView restartImage = createImageView("images/Restart-Image.png", 53);
+        Button restartButton = createButton(459, 478, restartImage);
+
+        ImageView setBoardImage = createImageView("images/SetBoard-Image.png", 45);
+        Button setBoard = createButton(455, 427, setBoardImage);
         ButtonHandler setBoardHandler = new ButtonHandler();
         setBoardHandler.getEntities(setBoard, labelBlue, labelRed, this);
 
-        arrowImage = new ImageView(new Image("images/Arrow-image.png"));
-        arrowImage.setFitWidth(23);
-        arrowImage.setPreserveRatio(true);
-        arrowImage.setLayoutX(490);
+        arrowImage = createImageView("images/Arrow-image.png", 23);
+        arrowImage.setLayoutX(531);
         arrowImage.setLayoutY(477);
 
-        Button randomFactoryButton = new Button("R");
-        randomFactoryButton.setLayoutX(490);
-        randomFactoryButton.setLayoutY(500);
+        ImageView randomImage = createImageView("images/Random-Image.png", 30);
+        Button randomFactoryButton = createButton(520, 497, randomImage);
         ButtonHandler rFactory = new ButtonHandler();
-        rFactory.activeFactory(randomFactoryButton, arrowImage, this);
+        rFactory.activeFactory(randomFactoryButton, arrowImage, "Random", this);
 
-        Button balancedFactoryButton = new Button("B");
-        balancedFactoryButton.setLayoutX(545);
-        balancedFactoryButton.setLayoutY(500);
+        ImageView balanceImage = createImageView("images/Balance-Image.png", 30);
+        Button balancedFactoryButton = createButton(560, 497, balanceImage);
         ButtonHandler bFactory = new ButtonHandler();
-        bFactory.activeFactory(balancedFactoryButton, arrowImage, this);
+        bFactory.activeFactory(balancedFactoryButton, arrowImage, "Balanced", this);
 
         theBattlefield.getChildren().addAll(playPauseButton, plusButtonBlue, minusButtonBlue,
                 plusButtonRed, minusButtonRed, labelBlue, labelRed, setBoard, randomFactoryButton,
-                balancedFactoryButton, arrowImage);
+                balancedFactoryButton, arrowImage, restartButton, blueSword, blueBow, redSword,
+                redBow);
     }
 
     /**
@@ -152,11 +158,11 @@ public class BattlefieldController {
      * @param y The y position of the label
      * @return A label that displayes the number of entities
      */
-    private Label createLabel(int x, int y) {
+    private Label createLabel(int x, int y, int fontSize) {
         Label label = new Label();
         label.setText("0");
         label.setTextFill(Color.WHITE);
-        label.setFont(Font.font("Arial", FontWeight.BOLD, 35));
+        label.setFont(Font.font("Arial", FontWeight.BOLD, fontSize));
         label.setLayoutX(x);
         label.setLayoutY(y);
         return label;
@@ -180,30 +186,17 @@ public class BattlefieldController {
      * @param x The x position of the button
      * @param y The y position of the button
      * @param image The image of the button
-     * @param padding The padding around the image
-     * @param setFill Determines if the button should be filled in or transparent
-     * @param boarderWidth The boarder width of the button
      * @return A button
      */
-    private Button createButton(int x, int y, ImageView image, int padding, boolean setFill, int boarderWidth) {
+    private Button createButton(int x, int y, ImageView image) {
         Button button = new Button();
-        button.setTranslateX(x);
-        button.setTranslateY(y);
+        button.setLayoutX(x);
+        button.setLayoutY(y);
         button.setGraphic(image);
 
-        String backgroundColor;
-        if (setFill) {
-            backgroundColor = "#3b3b3b";
-        } else {
-            backgroundColor = "transparent";
-        }
+        button.setStyle("-fx-background-color: transparent;");
+        button.getStylesheets().add(getClass().getResource("ButtonFX.css").toExternalForm());
 
-        button.setStyle(
-                "-fx-background-color: " + backgroundColor + ";" +
-                        "-fx-border-width: " + boarderWidth + ";" +
-                        "-fx-border-radius: 20;" +
-                        "-fx-border-color: #3b3b3b;" +
-                        "-fx-padding:" + padding);
         return button;
     }
 
@@ -233,5 +226,17 @@ public class BattlefieldController {
      */
     private void instanceAddChild(Node node) {
         theBattlefield.getChildren().add(node);
+    }
+
+    private void winnerDisplay(String winner, int winBy) {
+        winHow = createLabel(345, 35, 15);
+
+        if (winBy == 0) {
+            winHow.setText("No enemies left to continue the battle.\n" + winner + " win!");
+        } else if (winBy == 1) {
+            winHow.setText(winner + " breached the opponents side.\n" + winner + " win!");
+        }
+
+        theBattlefield.getChildren().add(winHow);
     }
 }

@@ -69,14 +69,16 @@ public class ButtonHandler {
      * @param arrow      An arrow that shows which factory is currently selected
      * @param controller The main controller of the program
      */
-    public void activeFactory(Button button, ImageView arrow, BattlefieldController controller) {
+    public void activeFactory(Button button, ImageView arrow, String factory, BattlefieldController controller) {
+
         button.setOnAction(new EventHandler() {
             @Override
             public void handle(Event event) {
-                double locationX = button.getLayoutX();
+                double locationX = button.getLayoutX() + 11;
+                System.out.println(locationX);
                 arrow.setLayoutX(locationX);
-                System.out.println(button.getText() + " Factory Selected");
-                controller.setCurrentFactory(button.getText());
+                System.out.println(factory + " Factory Selected");
+                controller.setCurrentFactory(factory);
             }
         });
     }
