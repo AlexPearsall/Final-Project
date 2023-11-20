@@ -47,7 +47,7 @@ public class Soldier implements Entity {
         ellipse.setRadiusX(radiusX);
         ellipse.setRadiusY(radiusY);
         ellipse.setStroke(Color.WHITE);
-        controller.addChild(ellipse);
+        controller.addEntities(ellipse);
         return ellipse;
     }
 }
