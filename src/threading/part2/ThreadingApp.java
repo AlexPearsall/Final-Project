@@ -1,11 +1,12 @@
-package threading.part1;
+package threading.part2;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ThreadingApp {
-    private List<Integer> theList = new ArrayList<>();
-    private final int count = 29;
+    private List<Integer> theList = new LinkedList<>();
+    private final int count = 10_000;
 
     public ThreadingApp() throws InterruptedException {
         Thread thread = new Thread(() -> addElements(count));
@@ -24,7 +25,6 @@ public class ThreadingApp {
 
         for (int i = 0; i < count; i++) {
             theList.add(i);
-            System.out.println(theList.toString());
         }
     }
 }
