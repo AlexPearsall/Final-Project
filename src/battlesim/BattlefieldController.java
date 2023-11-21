@@ -46,7 +46,7 @@ public class BattlefieldController {
         createInterface();
 
         for (int i = 0; i < numberOfSoldiers; i++) {
-            soldiers.add(new Soldier(new Point2D(Math.random() * 960, Math.random() * 540), this));
+            soldiers.add(new Soldier(null));
         }
 
         //winnerDisplay("Soldiers", 0);
