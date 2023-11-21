@@ -84,19 +84,19 @@ public class BattlefieldController {
         minusRedHandler.changeAmount(minusButtonRed, labelRed, -1);
 
 
-        ImageView playImage = createImageView("images/Play-Image.png", 96);
-        ImageView pauseImage = createImageView("images/Pause-Image.png", 96);
+        ImageView playImage = createImageView("images/Play-Image.png", 86);
+        ImageView pauseImage = createImageView("images/Pause-Image.png", 86);
 
         //440 middle / 370 side
-        Button playPauseButton = createButton(355, 432, playImage);
+        Button playPauseButton = createButton(355, 435, playImage);
         ButtonHandler playPauseHandler = new ButtonHandler();
         playPauseHandler.playPause(playPauseButton, playImage, pauseImage);
 
-        ImageView restartImage = createImageView("images/Restart-Image.png", 53);
+        ImageView restartImage = createImageView("images/Restart-Image.png", 48);
         Button restartButton = createButton(459, 478, restartImage);
 
-        ImageView setBoardImage = createImageView("images/SetBoard-Image.png", 45);
-        Button setBoard = createButton(455, 427, setBoardImage);
+        ImageView setBoardImage = createImageView("images/SetBoard-Image.png", 41);
+        Button setBoard = createButton(462, 427, setBoardImage);
         ButtonHandler setBoardHandler = new ButtonHandler();
         setBoardHandler.getEntities(setBoard, labelBlue, labelRed, this);
 
@@ -194,7 +194,7 @@ public class BattlefieldController {
         button.setLayoutY(y);
         button.setGraphic(image);
 
-        button.setStyle("-fx-background-color: transparent;");
+        //button.setStyle("-fx-background-color: transparent;");
         button.getStylesheets().add(getClass().getResource("ButtonFX.css").toExternalForm());
 
         return button;
