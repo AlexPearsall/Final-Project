@@ -14,6 +14,7 @@ import javafx.scene.text.FontWeight;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Sets the basic GUI display along with
@@ -33,6 +34,10 @@ public class BattlefieldController {
     private int numberOfSoldiers;
     private int numberOfEnemies;
     private String currentFactory = "R";
+    private final int minSpawnX = 0;
+    private final int minSpawnY = 0;
+    private final int maxSpawnX = 200;
+    private final int maxSpawnY = 400;
 
     /**
      *
@@ -45,8 +50,11 @@ public class BattlefieldController {
 
         createInterface();
 
-        for (int i = 0; i < numberOfSoldiers; i++) {
-            soldiers.add(new Soldier(null));
+        Random random = new Random();
+        for (Soldier soldier: soldiers) {
+            int startX = random.nextInt(maxSpawnX - minSpawnX) + minSpawnX;
+            int startY = random.nextInt(maxSpawnY - minSpawnY) + minSpawnY;
+            soldier.setStart(startX, startY);
         }
 
         //winnerDisplay("Soldiers", 0);
